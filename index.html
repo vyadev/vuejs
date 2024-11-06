@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VueJS</title>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="app"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      "
+    >
+      <div style="border: 1px solid #eee; padding: 15px" v-cloak>
+        <input type="text" v-model="name" />
+        <button type="button" v-on:click="addTask">Добавить</button>
+        <ol v-if="tasks.length > 0">
+          <li v-for="(task, idx) in tasks">
+            {{task}}
+            <button v-on:click="deleteTask(idx)">x</button>
+          </li>
+        </ol>
+        <p v-else>Нет ни одной задачи</p>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            name: 'dddd',
+            tasks: [],
+          };
+        },
+
+        methods: {
+          addTask() {
+            if (this.name === '') return;
+            this.tasks.push(this.name);
+            this.name = '';
+          },
+
+          deleteTask(idx) {
+            this.tasks = this.tasks.filter((item, index) => {
+              return idx !== index;
+            });
+          },
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
